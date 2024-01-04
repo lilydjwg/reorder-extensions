@@ -21,7 +21,7 @@
     try{
       parsed_map = new Map()
       for(let [k, v] of Object.entries(JSON.parse(extmap))) {
-        parsed_map.set(k.replace(/[^A-Za-z0-9-]/g, '_') + '-browser-action', v)
+        parsed_map.set(k.toLowerCase().replace(/[^A-Za-z0-9-]/g, '_') + '-browser-action', v)
       }
       update_state()
     }catch(e){
@@ -31,7 +31,7 @@
   let hovering = false;
 
   const drop = (event, target) => {
-    event.dataTransfer.dropEffect = 'move'; 
+    event.dataTransfer.dropEffect = 'move';
     const start = parseInt(event.dataTransfer.getData("text/plain"));
     const newTracklist = extlist
 
@@ -78,8 +78,8 @@ console.log(JSON.stringify(data))
 {#if extlist.length > 0}
   <div class="list">
   {#each extlist as n, index (n.key)}
-    <div class="list-item" 
-       draggable={true} 
+    <div class="list-item"
+       draggable={true}
        on:dragstart={event => dragstart(event, index)}
        on:drop|preventDefault={event => drop(event, index)}
        ondragover="return false"
